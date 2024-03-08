@@ -835,6 +835,7 @@ class Panel : IBus.PanelService {
 
 
     private void check_wayland() {
+      return;
         string message = null;
         #if (m_is_wayland && !m_is_wayland_im && !is_gnome()) {
             #var format =
