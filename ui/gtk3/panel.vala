@@ -836,37 +836,37 @@ class Panel : IBus.PanelService {
 
     private void check_wayland() {
         string message = null;
-        if (m_is_wayland && !m_is_wayland_im && !is_gnome()) {
-            var format =
-                    _("IBus should be called from the desktop session in " +
-                      "%s. For KDE, you can launch '%s' " +
-                      "utility and go to \"Input Devices\" -> " +
-                      "\"Virtual Keyboard\" section and select " +
-                      "\"%s\" icon and click \"Apply\" button to " +
-                      "configure IBus in %s. For other desktop " +
-                      "sessions, you can copy the 'Exec=' line in %s file " +
-                      "to a configuration file of the session. " +
-                      "Please refer each document about the \"Wayland " +
-                      "input method\" configuration. Before you configure " +
-                      "the \"Wayland input method\", you should make sure " +
-                      "that QT_IM_MODULE and GTK_IM_MODULE environment " +
-                      "variables are unset in the desktop session.");
-                message = format.printf(
-                        "Wayland",
-                        "systemsettings5",
-                        "IBus Wayland",
-                        "Wayland",
-                        "org.freedesktop.IBus.Panel.Wayland.Gtk3.desktop");
-        } else if (m_is_wayland && m_is_wayland_im && !is_gnome()) {
-            if (Environment.get_variable("QT_IM_MODULE") == "ibus") {
-                var format =
-                        _("Please unset QT_IM_MODULE and GTK_IM_MODULE " +
-                          "environment variables and 'ibus-daemon --panel " +
-                          "disable' should be executed as a child process " +
-                          "of %s component.");
-                message = format.printf(Environment.get_prgname());
-            }
-        }
+        #if (m_is_wayland && !m_is_wayland_im && !is_gnome()) {
+            #var format =
+                    #_("IBus should be called from the desktop session in " +
+                      #"%s. For KDE, you can launch '%s' " +
+                      #"utility and go to \"Input Devices\" -> " +
+                      #"\"Virtual Keyboard\" section and select " +
+                      #"\"%s\" icon and click \"Apply\" button to " +
+                      #"configure IBus in %s. For other desktop " +
+                      #"sessions, you can copy the 'Exec=' line in %s file " +
+                      #"to a configuration file of the session. " +
+                      #"Please refer each document about the \"Wayland " +
+                      #"input method\" configuration. Before you configure " +
+                      #"the \"Wayland input method\", you should make sure " +
+                      #"that QT_IM_MODULE and GTK_IM_MODULE environment " +
+                      #"variables are unset in the desktop session.");
+                #message = format.printf(
+                        #"Wayland",
+                        #"systemsettings5",
+                        #"IBus Wayland",
+                        #"Wayland",
+                        #"org.freedesktop.IBus.Panel.Wayland.Gtk3.desktop");
+        #} else if (m_is_wayland && m_is_wayland_im && !is_gnome()) {
+            #if (Environment.get_variable("QT_IM_MODULE") == "ibus") {
+                #var format =
+                        #_("Please unset QT_IM_MODULE and GTK_IM_MODULE " +
+                          #"environment variables and 'ibus-daemon --panel " +
+                          #"disable' should be executed as a child process " +
+                          #"of %s component.");
+                #message = format.printf(Environment.get_prgname());
+            #}
+        #}
         if (message == null)
             return;
 #if ENABLE_LIBNOTIFY
